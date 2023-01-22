@@ -1,0 +1,47 @@
+name: autograding assignments
+
+on:
+  push:
+    branches:
+      - master
+    # paths: 
+      # - '../../parser.c'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Googletest
+      run: |
+        sudo apt-get install libgtest-dev
+        cd /usr/src/gtest
+        sudo cmake CmakeLists.txt
+        sudo make
+
+    - name: build & run
+      run: |
+        mkdir build && cd build 
+        cmake ..
+        make
+    #    ./prime
+
+      if: success() || failure()
+    - uses: education/autograding@v1
+    # - name: classroom
+      id: autograder
+      continue-on-error: true
+
+    # - name: SUCCESS
+    # if: success()
+    # env: 
+    #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # with:
+    #   path: .github/ISSUE_TEMPLATE/success.md
+
+    # - name: FAIL
+    #   if: failure()
+    #   uses: machine-learning-apps/pr-comment@master
+    #   env: 
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     path: .github/ISSUE_TEMPLATE/failure.md
