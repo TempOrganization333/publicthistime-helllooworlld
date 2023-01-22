@@ -14,11 +14,3 @@ bool is_prime(int n){
 std::string plus_one(std::string a){
     return a + "1";
 }
-
-
-// int main(){
-//     std::cout<<"Hello World.\n";
-//     int x;
-//     std::cin>>x;
-//     std::cout<<is_prime(x);
-// }
